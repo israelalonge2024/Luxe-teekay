@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teekay Luxe | Premium Timepieces</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
+  
+<!-- GSAP Core -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+<!-- ScrollTrigger Plugin -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+   
+</head>
+<body>
+ 
+
+<!-- EXPLORE MORE SECTION -->
+<section class="explore-section">
+  <div class="explore-container">
+    <h2 class="explore-title">Discover Teekay luxe</h2>
+    <p class="explore-text">
+      Your perfect watch is waiting. Choose from premium <span>Rolex</span>, stylish <span>digital watches</span>, affordable everyday timepieces, and elegant bracelets for women. No matter your style or budget, we deliver quality, precision, and class to your wrist.
+    </p>
+  <a href="https://wa.me/+234 708 700 6807" class="explore-btn" target="_blank">Chat on WhatsApp</a>
+  </div>
+</section>
+
+<style>
+  /* Section Styling */
+  .explore-section {
+    background-color: #000; /* Black background */
+    color: white;
+    padding: 80px 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .explore-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: gold; /* Gold title */
+    margin-bottom: 20px;
+    opacity: 0;
+    transform: translateY(-20px);
+    animation: fadeInDown 1s ease forwards;
+  }
+
+  .explore-text {
+    font-size: 1.2rem;
+    max-width: 700px;
+    margin: 0 auto 30px;
+    line-height: 1.6;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1.2s ease forwards;
+    animation-delay: 0.3s;
+  }
+
+  .explore-text span {
+    color: gold;
+    font-weight: bold;
+  }
+
+  .explore-btn {
+    display: inline-block;
+    padding: 14px 30px;
+    background-color: gold;
+    color: black;
+    font-weight: bold;
+    font-size: 1rem;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: scale(0.9);
+    animation: fadeInScale 1s ease forwards;
+    animation-delay: 0.6s;
+  }
+
+  .explore-btn:hover {
+    background-color: white;
+    color: black;
+    transform: scale(1.05);
+  }
+
+  /* Animations */
+  @keyframes fadeInDown {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeInScale {
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+</style>
+</body>
+</html>

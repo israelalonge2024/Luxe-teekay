@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teekay Luxe | Premium Timepieces</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
+  
+<!-- GSAP Core -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+<!-- ScrollTrigger Plugin -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+   
+</head>
+<body>
+    <!-- Loading Animation -->
+    <div class="loader">
+<div class="hold">
+        <div class="watch-loader">
+            <div class="watch-hands hour-hand"></div>
+            <div class="watch-hands minute-hand"></div>
+            <div class="watch-hands second-hand"></div>
+        </div>
+    </div>
+<div class="hold2">
+   <h2 class="load">Teekay luxe</h2>
+    <p>Crafted with precision and passion</p>
+</div>
+    </div>
+
+    <!-- Sticky Navbar -->
+    <nav class="navbar">
+        <a href="#" class="logo">Teekay Luxe</a>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#collections">Collections</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+        </div>
+        <div class="nav-icons">
+            <i class="fas fa-search"></i>
+            <i class="fas fa-user"></i>
+            <i class="fas fa-shopping-bag"></i>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <video autoplay loop class="hero-video">
+            <source src="Tee.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-tagline">Crafted with precision and passion</div>
+            <h1 class="hero-title">Where Quality meet Class</h1>
+            <p class="hero-subtitle">Discover our exclusive collection of handcrafted timepieces that blend heritage with innovation</p>
+            <div class="cta-buttons">
+<button class="cta-button" onclick="slowScrollTo('watches')">Explore Collection</button>
+
+<script>
+  function slowScrollTo(id) {
+    const target = document.getElementById(id);
+    const targetY = target.getBoundingClientRect().top + window.pageYOffset;
+    const startY = window.pageYOffset;
+    const duration = 3000; // ms (1 second)
+
+    let startTime = null;
+
+    function animateScroll(currentTime) {
+      if (!startTime) startTime = currentTime;
+      const timeElapsed = currentTime - startTime;
+      const progress = Math.min(timeElapsed / duration, 1);
+      const ease = easeInOutQuad(progress);
+
+      window.scrollTo(0, startY + (targetY - startY) * ease);
+
+      if (timeElapsed < duration) {
+        requestAnimationFrame(animateScroll);
+      }
+    }
+
+    function easeInOutQuad(t) {
+      return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+    }
+
+    requestAnimationFrame(animateScroll);
+  }
+</script>
+<!-- Button -->
+
+<button class="cta-button" onclick="slowScrollTo('sectionz')">Shop Now</button>
+
+<script>
+  function slowScrollTo(id) {
+    const target = document.getElementById(id);
+    const targetY = target.getBoundingClientRect().top + window.pageYOffset;
+    const startY = window.pageYOffset;
+    const duration = 3000; // ms (1 second)
+
+    let startTime = null;
+
+    function animateScroll(currentTime) {
+      if (!startTime) startTime = currentTime;
+      const timeElapsed = currentTime - startTime;
+      const progress = Math.min(timeElapsed / duration, 1);
+      const ease = easeInOutQuad(progress);
+
+      window.scrollTo(0, startY + (targetY - startY) * ease);
+
+      if (timeElapsed < duration) {
+        requestAnimationFrame(animateScroll);
+      }
+    }
+
+    function easeInOutQuad(t) {
+      return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+    }
+
+    requestAnimationFrame(animateScroll);
+  }
+</script>
+            </div>
+        </div>
+    </section>
+<section class="heros">
+    <div class="hero-contents">
+      <div class="text-content">
+        <h1>Your Confidence is right at your wrist</h1>
+        <p>Welcome to Teekay Luxe  where timeless elegance meets modern precision. Discover wristwatches crafted to elevate your style, empower your presence, and leave a lasting impression</p>
+        <a href="more.html" class="btn">Explore More</a>
+      </div>
+
+      <div class="video-wrapper">
+        <video
+          id="heroVideo"
+          src="Tee.mp4"
+          class="video"
+          muted
+          playsinline
+        ></video>
+        <div id="playBtn" class="play-overlay">
+          <div class="play-btn">▶</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const video = document.getElementById("heroVideo");
+    const playBtn = document.getElementById("playBtn");
+
+    playBtn.addEventListener("click", () => {
+      video.play();
+      video.classList.add("playing");
+      playBtn.classList.add("hidden");
+    });
+
+    video.addEventListener("mouseenter", () => {
+      if (video.paused && !video.classList.contains("playing")) {
+        video.play();
+      }
+    });
+
+    video.addEventListener("mouseleave", () => {
+      if (!video.classList.contains("playing")) {
+        video.pause();
+      }
+    });
+
+    video.addEventListener("ended", () => {
+      video.classList.remove("playing");
+      playBtn.classList.remove("hidden");
+    });
+  </script>
+    <!-- Collections Section -->
+   
+    <!-- WATCHES SECTION (Black / Gold / White, Google Sheet powered) -->
+<section class="watches" id="watches" class="watches-section">
+  <h2 class="section-title">Our Collection</h2>
+  <div id="watches-container" class="watches-grid"></div>
+
+  <!-- Optional contact buttons -->
+  <div class="contact-row">
+    <a href="https://wa.me/+234 708 700 6807" target="_blank" class="contact-btn">WhatsApp Us</a>
+    <a href="mailto:>teekayeducationalconsults@gmail.com subject=Watch%20Enquiry" class="contact-btn">Email Us</a>
+  </div>
+</section>
+
+<script>
+  // ============ CONFIG ================
+  const sheetID = 10EuVbbgG5yfID65T5pa82DkK9VSHU_NBilp6svHjJmI"; // ← REPLACE THIS
+  const base = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json`;
+  const placeholderImg = "https://via.placeholder.com/600x400?text=No+Image";
+
+  // ============ FETCH SHEET & RENDER ============
+  fetch(base)
+    .then(res => res.text())
+    .then(txt => {
+      const json = JSON.parse(txt.substr(47).slice(0, -2));
+      const rows = json.table.rows || [];
+      if (rows.length <= 1) {
+        document.getElementById("watches-container").innerHTML = "<p class='hint'>No products yet. Add rows to your Google Sheet.</p>";
+        return;
+      }
+
+      // Skip header row:
+      const dataRows = rows.slice(1);
+      let html = "";
+      dataRows.forEach(row => {
+        const name = row.c[0]?.v || "Untitled";
+        const priceRaw = row.c[1]?.v || "";
+        const price = priceRaw ? new Intl.NumberFormat('en-NG').format(priceRaw) : "";
+        const category = row.c[2]?.v || "";
+        const img = row.c[3]?.v || placeholderImg;
+
+        html += `
+          <article class="watch-card">
+            <div class="watch-image"><img src="${img}" alt="${name}"></div>
+            <h3 class="watch-name">${name}</h3>
+            <p class="watch-category">${category}</p>
+            <div class="watch-price">₦${price}</div>
+          </article>
+        `;
+      });
+
+      document.getElementById("watches-container").innerHTML = html;
+
+      // Simple staggered fade-in
+      document.querySelectorAll(".watch-card").forEach((el, i) => {
+        setTimeout(() => el.classList.add("show"), i * 80);
+      });
+    })
+    .catch(err => {
+      console.error("Sheet fetch error:", err);
+      document.getElementById("watches-container").innerHTML = "<p class='hint'>Could not load products. Check Sheet ID and sharing settings.</p>";
+    });
+
+  // ============ SMOOTH SCROLL for internal links (optional) ============
+  document.addEventListener("click", e => {
+    const a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute("href"));
+    if (target) target.scrollIntoView({ behavior: "smooth" });
+  });
+</script>
+
+<style>
+  :root {
+    --bg: #000;
+    --card: #111;
+    --gold: #d4af37;
+    --muted: #bfbfbf;
+    --white: #fff;
+  }
+  .watches-section {
+    background: var(--bg);
+    color: var(--white);
+    padding: 60px 20px;
+    text-align: center;
+  }
+  .section-title {
+    font-size: 2.4rem;
+    color: var(--gold);
+    margin-bottom: 30px;
+    font-weight: 700;
+  }
+  .watches-grid {
+    display: grid;
+    gap: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .watch-card {
+    background: var(--card);
+    border: 1px solid var(--gold);
+    border-radius: 12px;
+    padding: 14px;
+    overflow: hidden;
+    transform: translateY(12px);
+    opacity: 0;
+    transition: transform 0.55s cubic-bezier(.2,.9,.2,1), opacity 0.55s;
+  }
+  .watch-card.show { transform: translateY(0); opacity: 1; }
+  .watch-image {
+    height: 220px;
+    overflow: hidden;
+    border-radius: 8px;
+    margin-bottom: 12px;
+  }
+  .watch-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.45s;
+  }
+  .watch-card:hover .watch-image img { transform: scale(1.06); }
+  .watch-name { color: var(--gold); font-size: 1.15rem; margin: 6px 0; }
+  .watch-category { color: var(--muted); margin-bottom: 10px; }
+  .watch-price {
+    display: inline-block;
+    background: var(--gold);
+    color: black;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-weight: 700;
+  }
+
+  /* contact buttons */
+  .contact-row { margin-top: 20px; }
+  .contact-btn {
+    display: inline-block;
+    margin: 6px;
+    padding: 10px 18px;
+    background: var(--gold);
+    color: black;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 700;
+  }
+  .hint { color: var(--muted); }
+  @media (max-width:600px) {
+    .watch-image { height: 160px; }
+  }
+</style>
+<!-- Featured Products -->
+    <section id="sectionz" class="section">
+        <h2 class="section-title">Featured Timepieces</h2>
+        <p class="section-subtitle">Our most sought-after creations, embodying the pinnacle of watchmaking excellence</p>
+        
+        <div class="featured-container">
+            <div class="featured-product">
+                <img src="Hublot.jpg" alt="Chronograph Master" class="featured-img">
+                <h3 class="featured-name">Hublot wristwatch</h3>
+                <p class="featured-desc">Automatic movement with moon phase complication and 72-hour power reserve</p>
+                <div class="featured-price">&#8358; 22,000</div>
+                <div class="featured-buttons">
+                    <button class="featured-button wishlist"><i class="fas fa-heart"></i> Wishlist</button>
+                    <button class="featured-button">Details</button>
+                </div>
+            </div>
+            
+            <div class="featured-product">
+                <img src="https://images.unsplash.com/photo-1548169874-53e85f753f1e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600" alt="Heritage Classic" class="featured-img">
+                <h3 class="featured-name">Heritage Classic</h3>
+                <p class="featured-desc">Hand-wound mechanical movement with transparent case back and alligator strap</p>
+                <div class="featured-price">&#8358; 3,850</div>
+                <div class="featured-buttons">
+                    <button class="featured-button wishlist"><i class="fas fa-heart"></i> Wishlist</button>
+                    <button class="featured-button">Details</button>
+                </div>
+            </div>
+        </div>
+    </section>
+<section class="collection-grid">
+
+  <div class="grid-item item1 animate">
+    <video src="Ds.mp4" autoplay muted loop></video>
+  </div>
+
+  <div class="grid-item item2 animate">
+    <img src="IMG_9372.JPG" alt="Watch">
+    <h3>Silver </h3>
+    <p>Elegant & bold. For those who lead.</p>
+  </div>
+
+  <div class="grid-item item3 animate">
+    <h2>Discover the Legacy</h2>
+    <p>Each watch is built with precision and timeless design, blending art and mechanics into a masterpiece. Welcome to the future of wristwear.</p>
+   
+ <div style="align-text:center; justify-content:center;" class="btns">
+    <a style="color:background-color: #00ffb3; align-text:center; text-decoration:none;" href="discover.html">Explore Collection</a>
+</div>
+  </div>
+
+  <div class="grid-item item4 animate">
+    <img src="IMG_9400.JPG" alt="Watch Silver">
+    <h3>Arctic Silver</h3>
+    <p>Minimalist, sharp, and futuristic.</p>
+  </div>
+
+</section>
+    <!-- About Section -->
+    <section class="section animate" id="about">
+        <h2 class="section-title">Our Heritage</h2>
+        <p class="section-subtitle">A legacy of precision and craftsmanship</p>
+        
+        <div class="about-container">
+            <div class="about-img">
+                <img src="IMG_9396.JPG" alt="Watchmaking">
+            </div>
+            <div class="about-content">
+                <h3 class="about-title">Your wrist, Your story</h3>
+                <p class="about-text">We’re a newly established wristwatch and accessories brand, built on a simple goal to deliver clean, quality, and affordable style for everyone. At Teekay luxe, we believe your wrist should say something, even before you speak.
+<br>
+Our collection includes a wide range of wristwatches from simple, everyday designs to bold, standout pieces that complete any outfit. Whether you’re into classic looks or modern styles, we’ve got something that fits just right.
+<br>
+We also offer bracelets for both guys and ladies cool, stylish, and easy to wear. The kind of accessories that make you feel put together without doing too much.
+<br>
+This is just the beginning for us. We’re growing, we’re building, and we’re excited to bring something different to your wrist game.</p>
+                <p class="about-text">Each component is meticulously hand-finished and assembled by our artisans, who dedicate hundreds of hours to perfecting every detail. From the intricate movement to the hand-stitched leather straps, every element reflects our commitment to uncompromising quality.</p>
+                <div class="about-signature">
+                    <img src="profile.JPG" alt="Signature" class="signature-img">
+                    <div>
+                        <div class="signature-name">Teekay</div>
+                        <div class="signature-title">CEO Teekay luxe</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="section">
+        <div class="newsletter">
+            <h3 class="newsletter-title">Join Our Exclusive Circle</h3>
+            <p class="newsletter-subtitle">Subscribe to receive early access to new collections, special events, and private viewings</p>
+            <form class="newsletter-form">
+                <input type="email" class="newsletter-input" placeholder="Your email address">
+                <button type="submit" class="newsletter-button">Join the Circle</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="section">
+        <h2 class="section-title">Testimonials</h2>
+        <p class="section-subtitle">What our distinguished clients say about our timepieces</p>
+        
+        <div class="testimonials-container">
+            <div class="swiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="testimonial-card">
+                            <img src="https://i.pravatar.cc/150?img=12" alt="Client" class="testimonial-img">
+                            <p class="testimonial-text">"My Teekay Chronograph is more than a watch - it's a masterpiece. The craftsmanship is unparalleled, and I receive compliments every time I wear it."</p>
+                            <div class="testimonial-author">Smith stone</div>
+                            <div class="testimonial-role">Client</div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="testimonial-card">
+                            <img src="israel.JPG" alt="Client" class="testimonial-img">
+                            <p class="testimonial-text">"The attention to detail in every Teekay timepiece is extraordinary. I've owned luxury watches from many brands, but none compare to the perfection of my Heritage Classic."</p>
+                            <div class="testimonial-author">Israel Adedigba</div>
+                            <div class="testimonial-role">CEO Teekay Luxe</div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="testimonial-card">
+                            <img src="profile.JPG" alt="Client" class="testimonial-img">
+                            <p class="testimonial-text"> Our watch carries not just time, but legacy. It's the perfect blend of tradition and innovation that I'll proudly pass to my son."</p>
+                            <div class="testimonial-author">Samuel Adedigba</div>
+                            <div class="testimonial-role">CEO Teekay luxe</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Brand Video -->
+    <section class="section">
+        <div class="brand-video">
+            <video autoplay loop>
+                <source src="Tee.mp4">
+            </video>
+            <div class="video-overlay">
+                <h3 class="video-title">The Art of Precision</h3>
+                <p class="video-subtitle">Discover the meticulous craftsmanship that goes into every Teekay Lux timepiece</p>
+                <div class="play-button">
+                    <i class="fas fa-play"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section" id="contact">
+        <h2 class="section-title">Contact Us</h2>
+        <p class="section-subtitle">Our concierge team is ready to assist with any inquiries</p>
+        
+        <div class="contact-container">
+            <div class="contact-form">
+                <h3 class="form-title">Send a Message</h3>
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-input" placeholder="Your Name">
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-input" placeholder="Your Email">
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-input" placeholder="Your Message"></textarea>
+                    </div>
+                    <button type="submit" class="form-button">Send Message</button>
+                </form>
+            </div>
+            <div class="contact-info">
+                <div class="contact-map">
+                    <i class="fas fa-map-marker-alt"></i> Ekiti, Nigeria
+                </div>
+                <div class="contact-details">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-text">+234 708 700 6807</div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-text">teekayeducationalconsults@gmail.com</div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="contact-text">Mon-Fri: 9AM - 10PM</div>
+                    </div>
+                </div>
+                <div class="social-icons">
+                    <a href="https://www.instagram.com/de_tee_kay?igsh=MThhb3p2YzFpNnl5eQ==" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/share/14aXqqC9YY/" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://x.com/MrAdedigba001?t=VdfbHM_VFHj3RCyPEipTAA&s=09" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-pinterest"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h4>Teekay Lux</h4>
+                <p>Newly establish wrist watch,bracelet, and other fashion Accessories.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Collections</h4>
+                <div class="footer-links">
+                    <a href="men.html">Men's Watches</a>
+                    <a href="Women.html">Women's Watches</a>
+                    <a href="discover.html">Digital Editions</a>
+                    <a href="#">Vintage Collection</a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4>Customer Service</h4>
+                <div class="footer-links">
+                    <a href="https://wa.me/+234 708 700 6807">Contact Us</a>
+                    <a href="#">Shipping & Returns</a>
+                    <a href="#">Warranty</a>
+                    <a href="#">Care Instructions</a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4>Deliver to</h4>
+                <div class="footer-links">
+                    <a href="#">Oye ekiti</a>
+                    <a href="#">Ado ekiti</a>
+                    <a href="#">Akure</a>
+                    <a href="#">Ondo</a>
+                    <a href="#">Ikole
+<br>Anywhere in Nigeria</a>
+                </div>
+            </div>
+        </div>
+     
+        <div class="footer-bottom">
+            <p>&copy; 2025 Teekay Lux⌚️. All rights reserved. </p>
+        </div>
+    </footer>
+
+    <!-- Back to top button -->
+       <a href="#"><div class="back-to-top">
+  <i class="fas fa-arrow-up"></i>
+    </div></a>
+
+   
+    <script>
+        
+  // Register ScrollTrigger plugin
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Animate all elements with the class .fade-up
+  gsap.utils.toArray('.fade-up').forEach(elem => {
+    gsap.to(elem, {
+      scrollTrigger: {
+        trigger: elem,         // What to watch
+        start: "top 80%",      // When element hits 80% of viewport
+        toggleActions: "play none none none"
+      },
+      opacity: 1,
+      y: 0,
+      duration: 3.4,
+      ease: "power2.out"
+    });
+  });
+
+document.addEventListener('DOMContentLoaded', function() {
+            // Loader animation
+            setTimeout(() => {
+                document.querySelector('.loader').classList.add('hidden');
+            }, 2000);
+            
+            // GSAP Animations for Hero Section
+gsap.to('.section', {
+  scrollTrigger: {
+    trigger: '.section',
+    start: 'top 80%',   // when top of element hits 80% of viewport
+    toggleActions: 'play none none none'
+  },
+  duration: 2.4,
+  opacity: 1,
+  y: 0,
+  ease: 'power3.out'
+});
+            gsap.to('.hero-title', {
+                duration: 2,
+                opacity: 1,
+                y: 0,
+                delay: 2.5,
+                ease: "power3.out"
+            });
+
+      gsap.to('.section', {
+                duration: 3.4,
+                opacity: 1,
+                y: 0,
+                delay: 2.5,
+                ease: "power3.out"
+            });
+            
+          
+            
+            gsap.to('.hero-subtitle', {
+                duration: 2.1,
+                opacity: 1,
+                y: 0,
+                delay: 3.8,
+                ease: "power3.out"
+            });
+            
+            gsap.to('.cta-button', {
+                duration: 2.1,
+                opacity: 1,
+                y: 0,
+                stagger: 0.2,
+                delay: 4.1,
+                ease: "power3.out"
+            });
+            
+            // Sticky navbar behavior
+            let lastScrollTop = 0;
+            const navbar = document.querySelector('.navbar');
+            
+            window.addEventListener('scroll', function() {
+                let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                
+                if (scrollTop > lastScrollTop) {
+                    navbar.classList.add('hide');
+                } else {
+                    navbar.classList.remove('hide');
+                }
+                lastScrollTop = scrollTop;
+                
+                // Show/hide back to top button
+                const backToTop = document.querySelector('.back-to-top');
+                if (scrollTop > 500) {
+                    backToTop.classList.add('visible');
+                } else {
+                    backToTop.classList.remove('visible');
+                }
+            });
+            
+            // Simple scroll animation using IntersectionObserver
+const animatedItems = document.querySelectorAll('.animate');
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.2 });
+
+animatedItems.forEach(item => observer.observe(item));
+// Back to top functionality
+            document.querySelector('.back-to-top').addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Initialize Swiper for testimonials
+            const swiper = new Swiper('.swiper', {
+                loop: true,
+                autoplay: {
+                    delay: 5000,
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+            });
+            
+            // Show cookie consent after delay
+            setTimeout(() => {
+                document.querySelector('.cookie-consent').classList.add('visible');
+            }, 3000);
+            
+            // Handle cookie consent buttons
+            document.querySelector('.cookie-button.accept').addEventListener('click', function() {
+                document.querySelector('.cookie-consent').classList.remove('visible');
+            });
+            
+            document.querySelector('.cookie-button:not(.accept)').addEventListener('click', function() {
+                document.querySelector('.cookie-consent').classList.remove('visible');
+            });
+            
+            // Video play button
+            document.querySelector('.play-button').addEventListener('click', function() {
+                const video = document.querySelector('.brand-video video');
+                const overlay = document.querySelector('.video-overlay');
+                
+                if (video.paused) {
+                    video.play();
+                    overlay.style.opacity = 0;
+                    setTimeout(() => {
+                        overlay.style.display = 'none';
+                    }, 500);
+                } else {
+                    video.pause();
+                    overlay.style.display = 'flex';
+                    setTimeout(() => {
+                        overlay.style.opacity = 1;
+                    }, 10);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

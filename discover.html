@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digital Collection - Teekay luxe</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+    header {
+      background: black;
+      padding: 1rem 2rem;
+      border-bottom: 2px solid gold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 {
+      color: gold;
+    }
+    nav a {
+      color: white;
+      margin: 0 1rem;
+      text-decoration: none;
+    }
+    nav a:hover {
+      color: gold;
+    }
+    .container {
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+    .watch-card {
+      background: #111;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+    .watch-card:hover {
+      transform: scale(1.05);
+    }
+    .watch-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    .price {
+      color: gold;
+      font-weight: bold;
+      margin: 0.5rem 0;
+    }
+    footer {
+      background: black;
+      text-align: center;
+      padding: 1rem;
+      color: white;
+      border-top: 2px solid gold;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Teekay luxe</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="digital.html" style="color:gold;">Digital</a>
+    <a href="men.html">Men</a>
+    <a href="women.html">Women</a>
+  </nav>
+</header>
+
+<section>
+  <h2 style="text-align:center; color:gold; margin-top:1rem;">Digital Collection</h2>
+  <div class="container" id="watch-collection"></div>
+</section>
+
+<footer>
+  <p>&copy; 2025 Teekay luxe - All Rights Reserved</p>
+</footer>
+
+<script>
+  const sheetID = "10EuVbbgG5yfID65T5pa82DkK9VSHU_NBilp6svHjJmI"; 
+  const gid = "1972305286"; 
+  const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json&tq&gid=${gid}`;
+
+  fetch(url)
+    .then(res => res.text())
+    .then(data => {
+      const json = JSON.parse(data.substr(47).slice(0, -2));
+      const rows = json.table.rows;
+      let html = "";
+      rows.forEach((row, index) => {
+        if(index === 0) return; 
+        html += `
+          <div class="watch-card" data-aos="fade-up" data-aos-delay="${index * 100}">
+            <img src="${row.c[2].v}" alt="${row.c[0].v}">
+            <h3>${row.c[0].v}</h3>
+            <p class="price">${row.c[1].v}</p>
+          </div>
+        `;
+      });
+      document.getElementById("watch-collection").innerHTML = html;
+      AOS.init();
+    });
+</script>
+
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+</body>
+</html>
