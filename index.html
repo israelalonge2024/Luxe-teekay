@@ -210,7 +210,7 @@
       }
 
       // Get headers from first row
-      const headers = rows[0].c.map(h => h?.v?.toString().trim().toLowerCase() || "");
+      const headers = rows[1].c.map(h => h?.v?.toString().trim().toLowerCase() || "");
       
       // Find column indexes dynamically
       const nameIndex = headers.indexOf("name");
@@ -219,7 +219,7 @@
       const imgIndex = headers.indexOf("image url");
 
       // Skip header row and render
-      const dataRows = rows.slice(1);
+      const dataRows = rows.slice(2);
       let html = "";
       dataRows.forEach(row => {
         const name = row.c[nameIndex]?.v || "Untitled";
