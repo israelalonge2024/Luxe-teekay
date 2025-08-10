@@ -215,30 +215,27 @@
       const json = JSON.parse(txt.substr(47).slice(0, -2));
       const rows = json.table.rows || [];
 
-      if (rows.length < 2) {
+      if (rows.length < 1) {
         document.getElementById("watches-container").innerHTML =
           "<p class='hint'>No products yet. Add rows to your Google Sheet.</p>";
         return;
       }
 
-      // Get headers from first row
-      const headers = rows[0].c.map(cell => (cell?.v ?? "").toString().trim().toLowerCase());
-      const nameIndex = headers.indexOf("name") >= 0 ? headers.indexOf("name") : 0;
-      const priceIndex = headers.indexOf("price") >= 0 ? headers.indexOf("price") : 1;
-      const categoryIndex = headers.indexOf("category") >= 0 ? headers.indexOf("category") : 2;
-      const imgIndex = headers.indexOf("image url") >= 0 ? headers.indexOf("image url") : 3;
-
-      const dataRows = rows.slice(1);
       let html = "";
 
-      dataRows.forEach(row => {
+      // Loop through every row in the sheet
+      rows.forEach(row => {
         const cells = row.c || [];
-        const name = cells[nameIndex]?.v || "Untitled";
-        const price = sanitizePrice(cells[priceIndex]?.v);
-        const category = cells[categoryIndex]?.v || "";
-        let img = cells[imgIndex]?.v || "";
 
-        // Auto-convert Drive link to direct view
+        // Skip completely empty rows
+        if (!cells[0]?.v && !cells[1]?.v && !cells[2]?.v && !cells[3]?.v) return;
+
+        const name = cells[0]?.v || "Untitled";
+        const price = sanitizePrice(cells[1]?.v);
+        const category = cells[2]?.v || "";
+        let img = cells[3]?.v || "";
+
+        // Convert Drive link
         img = driveToDirect(img) || placeholderImg;
 
         html += `
@@ -254,7 +251,8 @@
         `;
       });
 
-      document.getElementById("watches-container").innerHTML = html;
+      document.getElementById("watches-container").innerHTML = html || 
+        "<p class='hint'>No products yet. Add rows to your Google Sheet.</p>";
 
       // Simple stagger animation
       document.querySelectorAll(".watch-card").forEach((el, i) =>
