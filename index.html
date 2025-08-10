@@ -190,7 +190,6 @@
     <a href="mailto:>teekayeducationalconsults@gmail.com subject=Watch%20Enquiry" class="contact-btn">Email Us</a>
   </div>
 </section>
-
 <script>
   // ============ CONFIG ================
   const sheetID = "10EuVbbgG5yfID65T5pa82DkK9VSHU_NBilp6svHjJmI"; // ✅ Corrected
@@ -203,23 +202,24 @@
     .then(txt => {
       const json = JSON.parse(txt.substr(47).slice(0, -2));
       const rows = json.table.rows || [];
-      if (rows.length <= 1) {
+      if (rows.length <= 2) {
         document.getElementById("watches-container").innerHTML =
           "<p class='hint'>No products yet. Add rows to your Google Sheet.</p>";
         return;
       }
 
-      // Get headers from first row
+      // ✅ Get headers from the 2nd row (skip A B C D)
       const headers = rows[1].c.map(h => h?.v?.toString().trim().toLowerCase() || "");
-      
-      // Find column indexes dynamically
+
+      // ✅ Find column indexes dynamically
       const nameIndex = headers.indexOf("name");
       const priceIndex = headers.indexOf("price");
       const categoryIndex = headers.indexOf("category");
       const imgIndex = headers.indexOf("image url");
 
-      // Skip header row and render
+      // ✅ Skip first 2 rows (A B C D + actual headers)
       const dataRows = rows.slice(2);
+
       let html = "";
       dataRows.forEach(row => {
         const name = row.c[nameIndex]?.v || "Untitled";
