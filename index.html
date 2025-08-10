@@ -191,56 +191,109 @@
   </div>
 </section>
 <script>
-  // ============ CONFIG ================
-  const sheetID = "10EuVbbgG5yfID65T5pa82DkK9VSHU_NBilp6svHjJmI"; // ✅ Corrected
+  // CONFIG
+  const sheetID = "10EuVbbgG5yfID65T5pa82DkK9VSHU_NBilp6svHjJmI";
   const base = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json`;
   const placeholderImg = "https://via.placeholder.com/600x400?text=No+Image";
 
-  // ============ FETCH SHEET & RENDER ============
+  // helpers
+  function isPlaceholderRow(row) {
+    if (!row || !row.c) return false;
+    const vals = row.c.map(h => (h?.v ?? "").toString().trim());
+    // consider it placeholder if every cell is a single letter (A-Z) or empty
+    return vals.length > 0 && vals.every(v => v === "" || /^[A-Za-z]$/.test(v));
+  }
+
+  function findColIndex(headers, keywords) {
+    return headers.findIndex(h => keywords.some(k => h.includes(k)));
+  }
+
+  function driveToDirect(url) {
+    if (!url) return url;
+    // try to extract file id from common Drive patterns
+    const idMatch = url.match(/(?:\/d\/|id=)([a-zA-Z0-9_-]{10,})/);
+    if (idMatch && idMatch[1]) {
+      return `https://drive.google.com/uc?export=view&id=${idMatch[1]}`;
+    }
+    return url;
+  }
+
+  function sanitizePrice(raw) {
+    if (raw == null || raw === "") return "";
+    // remove commas and non-numeric characters except dot and minus
+    const cleaned = String(raw).replace(/,/g, "").replace(/[^\d.-]/g, "");
+    const num = parseFloat(cleaned);
+    if (!isNaN(num)) return new Intl.NumberFormat('en-NG').format(num);
+    // fallback: return original trimmed string (without extra whitespace)
+    return String(raw).trim();
+  }
+
+  // FETCH & RENDER
   fetch(base)
     .then(res => res.text())
     .then(txt => {
       const json = JSON.parse(txt.substr(47).slice(0, -2));
       const rows = json.table.rows || [];
-      if (rows.length <= 2) {
+      if (rows.length === 0) {
         document.getElementById("watches-container").innerHTML =
           "<p class='hint'>No products yet. Add rows to your Google Sheet.</p>";
         return;
       }
 
-      // ✅ Get headers from the 2nd row (skip A B C D)
-      const headers = rows[1].c.map(h => h?.v?.toString().trim().toLowerCase() || "");
+      // decide whether the real headers are in row 0 or row 1
+      const headerRowIndex = isPlaceholderRow(rows[0]) && rows.length > 1 ? 1 : 0;
+      const headers = (rows[headerRowIndex].c || []).map(h => (h?.v ?? "").toString().trim().toLowerCase());
 
-      // ✅ Find column indexes dynamically
-      const nameIndex = headers.indexOf("name");
-      const priceIndex = headers.indexOf("price");
-      const categoryIndex = headers.indexOf("category");
-      const imgIndex = headers.indexOf("image url");
+      // flexible column matching (accepts variations)
+      let nameIndex = findColIndex(headers, ["name", "product", "title"]);
+      let priceIndex = findColIndex(headers, ["price", "cost", "amount"]);
+      let categoryIndex = findColIndex(headers, ["category", "type"]);
+      let imgIndex = findColIndex(headers, ["image url", "image", "img", "photo", "picture", "image link", "url"]);
 
-      // ✅ Skip first 2 rows (A B C D + actual headers)
-      const dataRows = rows.slice(2);
+      // if we couldn't find columns, fall back to A,B,C,D positions
+      nameIndex = nameIndex === -1 ? 0 : nameIndex;
+      priceIndex = priceIndex === -1 ? 1 : priceIndex;
+      categoryIndex = categoryIndex === -1 ? 2 : categoryIndex;
+      imgIndex = imgIndex === -1 ? 3 : imgIndex;
+
+      const dataRows = rows.slice(headerRowIndex + 1);
+      if (dataRows.length === 0) {
+        document.getElementById("watches-container").innerHTML =
+          "<p class='hint'>No products yet. Add rows to your Google Sheet.</p>";
+        return;
+      }
 
       let html = "";
       dataRows.forEach(row => {
-        const name = row.c[nameIndex]?.v || "Untitled";
-        const priceRaw = row.c[priceIndex]?.v || "";
-        const price = priceRaw ? new Intl.NumberFormat('en-NG').format(priceRaw) : "";
-        const category = row.c[categoryIndex]?.v || "";
-        const img = row.c[imgIndex]?.v || placeholderImg;
+        // row.c might be shorter than expected; check safely
+        const cells = row.c || [];
+        const name = (cells[nameIndex]?.v ?? cells[0]?.v ?? "Untitled").toString();
+        const rawPrice = cells[priceIndex]?.v ?? "";
+        const price = sanitizePrice(rawPrice);
+        const category = (cells[categoryIndex]?.v ?? "").toString();
+        let img = (cells[imgIndex]?.v ?? "").toString().trim();
+
+        // convert Drive link to direct image link if needed
+        if (img && img.includes("drive.google.com")) img = driveToDirect(img);
+
+        if (!img) img = placeholderImg;
 
         html += `
           <article class="watch-card">
-            <div class="watch-image"><img src="${img}" alt="${name}"></div>
+            <div class="watch-image">
+              <img src="${img}" alt="${name.replace(/"/g,'')}"
+                   onerror="this.onerror=null;this.src='${placeholderImg}'" />
+            </div>
             <h3 class="watch-name">${name}</h3>
             <p class="watch-category">${category}</p>
-            <div class="watch-price">₦${price}</div>
+            <div class="watch-price">${price ? '₦' + price : ''}</div>
           </article>
         `;
       });
 
       document.getElementById("watches-container").innerHTML = html;
 
-      // Simple staggered fade-in
+      // small staggered reveal
       document.querySelectorAll(".watch-card").forEach((el, i) => {
         setTimeout(() => el.classList.add("show"), i * 80);
       });
@@ -250,15 +303,6 @@
       document.getElementById("watches-container").innerHTML =
         "<p class='hint'>Could not load products. Check Sheet ID and sharing settings.</p>";
     });
-
-  // ============ SMOOTH SCROLL for internal links (optional) ============
-  document.addEventListener("click", e => {
-    const a = e.target.closest('a[href^="#"]');
-    if (!a) return;
-    e.preventDefault();
-    const target = document.querySelector(a.getAttribute("href"));
-    if (target) target.scrollIntoView({ behavior: "smooth" });
-  });
 </script>
 <style>
   :root {
