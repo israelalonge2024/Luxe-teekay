@@ -164,8 +164,8 @@
         // Ensure row has at least 4 cells
         const name = row?.c?.[0]?.v || "Untitled";
         const price = row?.c?.[1]?.v ?? "0"; // Use 0 if empty
-        const img = row?.c?.[2]?.v || placeholder;
-        const desc = row?.c?.[3]?.v || "No description available.";
+        const img = row?.c?.[3]?.v || placeholder;
+        const desc = row?.c?.[4]?.v || "No description available.";
 
         html += `
           <article class="card" data-order="${index}" style="opacity:0; transform:translateY(20px);">
