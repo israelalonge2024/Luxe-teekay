@@ -190,159 +190,103 @@
     <a href="mailto:>teekayeducationalconsults@gmail.com subject=Watch%20Enquiry" class="contact-btn">Email Us</a>
   </div>
 </section>
-<script>
-  const sheetID = "10EuVbbgG5yfID65T5pa82DkK9VSHU_NBilp6svHjJmI";
-  const base = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json`;
-  const placeholderImg = "https://via.placeholder.com/600x400?text=No+Image";
 
-  // Convert Google Drive share link to direct image link
-  function driveToDirect(url) {
-    if (!url) return "";
-    const match = url.match(/\/d\/([a-zA-Z0-9_-]{10,})/);
-    return match ? `https://drive.google.com/uc?export=view&id=${match[1]}` : url;
+
+    
+<style>
+   .pro{   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #000;
+    color: white;
+    margin: 0;
+    padding: 0;
   }
-
-  function sanitizePrice(raw) {
-    if (!raw) return "";
-    const cleaned = String(raw).replace(/,/g, "").replace(/[^\d.-]/g, "");
-    const num = parseFloat(cleaned);
-    return isNaN(num) ? raw : new Intl.NumberFormat('en-NG').format(num);
-  }
-
-  fetch(base)
-    .then(res => res.text())
-    .then(txt => {
-      const json = JSON.parse(txt.substr(47).slice(0, -2));
-      const rows = json.table.rows || [];
-
-      if (rows.length < 1) {
-        document.getElementById("watches-container").innerHTML =
-          "<p class='hint'>No products yet. Add rows to your Google Sheet.</p>";
-        return;
-      }
-
-      let html = "";
-
-      // Loop through every row in the sheet
-      rows.forEach(row => {
-        const cells = row.c || [];
-
-        // Skip completely empty rows
-        if (!cells[0]?.v && !cells[1]?.v && !cells[2]?.v && !cells[3]?.v) return;
-
-        const name = cells[0]?.v || "Untitled";
-        const price = sanitizePrice(cells[1]?.v);
-        const category = cells[2]?.v || "";
-        let img = cells[3]?.v || "";
-
-        // Convert Drive link
-        img = driveToDirect(img) || placeholderImg;
-
-        html += `
-          <article class="watch-card">
-            <div class="watch-image">
-              <img src="${img}" alt="${name}" 
-                   onerror="this.onerror=null;this.src='${placeholderImg}'">
-            </div>
-            <h3 class="watch-name">${name}</h3>
-            <p class="watch-category">${category}</p>
-            <div class="watch-price">${price ? '₦' + price : ''}</div>
-          </article>
-        `;
-      });
-
-      document.getElementById("watches-container").innerHTML = html || 
-        "<p class='hint'>No products yet. Add rows to your Google Sheet.</p>";
-
-      // Simple stagger animation
-      document.querySelectorAll(".watch-card").forEach((el, i) =>
-        setTimeout(() => el.classList.add("show"), i * 80)
-      );
-    })
-    .catch(err => {
-      console.error("Sheet fetch error:", err);
-      document.getElementById("watches-container").innerHTML =
-        "<p class='hint'>Could not load products. Check Sheet ID and sharing settings.</p>";
-    });
-</script>
-    <style>
-  :root {
-    --bg: #000;
-    --card: #111;
-    --gold: #d4af37;
-    --muted: #bfbfbf;
-    --white: #fff;
-  }
-  .watches-section {
-    background: var(--bg);
-    color: var(--white);
-    padding: 60px 20px;
-    text-align: center;
-  }
-  .section-title {
-    font-size: 2.4rem;
-    color: var(--gold);
-    margin-bottom: 30px;
-    font-weight: 700;
-  }
-  .watches-grid {
+  .products {
     display: grid;
-    gap: 24px;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  .watch-card {
-    background: var(--card);
-    border: 1px solid var(--gold);
-    border-radius: 12px;
-    padding: 14px;
-    overflow: hidden;
-    transform: translateY(12px);
-    opacity: 0;
-    transition: transform 0.55s cubic-bezier(.2,.9,.2,1), opacity 0.55s;
-  }
-  .watch-card.show { transform: translateY(0); opacity: 1; }
-  .watch-image {
-    height: 220px;
-    overflow: hidden;
-    border-radius: 8px;
-    margin-bottom: 12px;
-  }
-  .watch-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.45s;
-  }
-  .watch-card:hover .watch-image img { transform: scale(1.06); }
-  .watch-name { color: var(--gold); font-size: 1.15rem; margin: 6px 0; }
-  .watch-category { color: var(--muted); margin-bottom: 10px; }
-  .watch-price {
-    display: inline-block;
-    background: var(--gold);
-    color: black;
-    padding: 6px 10px;
-    border-radius: 6px;
-    font-weight: 700;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 40px;
+      
   }
 
-  /* contact buttons */
-  .contact-row { margin-top: 20px; }
-  .contact-btn {
-    display: inline-block;
-    margin: 6px;
-    padding: 10px 18px;
-    background: var(--gold);
-    color: black;
-    text-decoration: none;
-    border-radius: 6px;
-    font-weight: 700;
+  .product {
+    background-color: #111;
+    border: 1px solid gold;
+    border-radius: 10px;
+    overflow: hidden;
+    text-align: center;
+    transition: transform 0.3s;
   }
-  .hint { color: var(--muted); }
-  @media (max-width:600px) {
-    .watch-image { height: 160px; }
+
+  .product:hover {
+    transform: scale(1.05);
   }
+
+  .product img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+  }
+
+  .product h3 {
+    color: gold;
+    margin: 15px 0 5px;
+  }
+
+  .product p {
+    color: #ccc;
+    padding: 0 10px;
+    font-size: 14px;
+  }
+
+  .price {
+    color: white;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+</style>
+  <section class="pro">  
+<h1 style="text-align:center; color: gold; padding-top: 20px;">Featured Products</h1>
+<div class="products" id="products-container"></div>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+
+<!-- AOS Animation -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init();
+
+  // Your Firebase Config
+  const firebaseConfig = {
+    apiKey: "AIzaSyDL5Bk4-6OPLA2RmpdCqUDvW1mkEGaZQ1k",
+    authDomain: "teekay-luxe.firebaseapp.com",
+    projectId: "teekay-luxe",
+    storageBucket: "teekay-luxe.firebasestorage.app",
+    messagingSenderId: "939785654418",
+    appId: "1:939785654418:web:7b067fb5a9322d5659564b"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+
+  const productsContainer = document.getElementById("products-container");
+
+  db.collection("General").get().then(snapshot => {
+    snapshot.forEach(doc => {
+      const data = doc.data();
+      productsContainer.innerHTML += `
+        <div class="product" data-aos="fade-up">
+          <img src="${data.img}" alt="${data.name}">
+          <h3>${data.name}</h3>
+          <p>${data.desc}</p>
+          <div class="price">₦${data.price.toLocaleString()}</div>
+        </div>
+      `;
+    });
+  });
+</script>
+</section>
 </style>
 <!-- Featured Products -->
     <section id="sectionz" class="section">
