@@ -140,25 +140,32 @@
   fetch(base)
     .then(response => response.text())
     .then(text => {
-      // Parse Google Sheets JSON
-      const json = JSON.parse(text.substr(47).slice(0, -2));
-      const rows = json.table.rows || [];
-
-      // No data case
-      if (rows.length <= 1) {
-        document.getElementById("emptyHint").style.display = "block";
+      // Safely parse Google Sheets JSON
+      let json;
+      try {
+        json = JSON.parse(text.substr(47).slice(0, -2));
+      } catch (err) {
+        console.error("JSON parse error:", err);
+        showError("Data format error. Please check Google Sheet.");
         return;
       }
 
-      const data = rows.slice(1); // Skip header
+      const rows = json?.table?.rows || [];
+      if (rows.length <= 1) {
+        showError("No products found for Men category.");
+        return;
+      }
+
+      const data = rows.slice(1); // skip header
       const container = document.getElementById("gridWrap");
       let html = "";
 
       data.forEach((row, index) => {
-        const name = row.c[0]?.v || "Untitled";
-        const price = row.c[1]?.v || "0";
-        const img = row.c[2]?.v || placeholder;
-        const desc = row.c[3]?.v || "";
+        // Ensure row has at least 4 cells
+        const name = row?.c?.[0]?.v || "Untitled";
+        const price = row?.c?.[1]?.v ?? "0"; // Use 0 if empty
+        const img = row?.c?.[2]?.v || placeholder;
+        const desc = row?.c?.[3]?.v || "No description available.";
 
         html += `
           <article class="card" data-order="${index}" style="opacity:0; transform:translateY(20px);">
@@ -179,10 +186,12 @@
 
       container.innerHTML = html;
 
-      // Init AOS animations
-      AOS.init({ once: true, duration: 700, easing: "ease-out-cubic" });
+      // AOS animations
+      if (typeof AOS !== "undefined") {
+        AOS.init({ once: true, duration: 700, easing: "ease-out-cubic" });
+      }
 
-      // Manual stagger entrance
+      // Manual stagger reveal
       document.querySelectorAll("#gridWrap .card").forEach((card, idx) => {
         setTimeout(() => {
           card.style.opacity = "1";
@@ -192,10 +201,17 @@
     })
     .catch(error => {
       console.error(error);
-      const hint = document.getElementById("emptyHint");
-      hint.textContent = "Could not load data. Check Sheet ID and sharing settings.";
-      hint.style.display = "block";
+      showError("Could not load data. Check Sheet ID and sharing settings.");
     });
+
+  // ===== Helper Function =====
+  function showError(message) {
+    const hint = document.getElementById("emptyHint");
+    if (hint) {
+      hint.textContent = message;
+      hint.style.display = "block";
+    }
+  }
 </script>
 </body>
 </html>
